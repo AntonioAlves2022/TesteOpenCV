@@ -71,3 +71,28 @@ class FormDetector:
                 else:
                     formas['outros'] += 1
             return formas
+
+    def view_results(self, imagem_original, formas):
+        """Visualizar os resultados"""
+        plt.figure(figsize=(10, 6))
+        plt.imshow(cv2.cvtColor(imagem_original, cv2.COLOR_BGR2RGB))
+        plt.title('Formas geOmétricas detectadas')
+        plt.axis('off')
+        legenda = f"""
+Formas detectadas:
+Triangulos: {formas['triangulos']}
+Quadrados: {formas['quadrados']}
+Circulos: {formas['circulos']}
+Outros: {formas['outros']}
+"""
+        plt.text(imagem_original.shape[1],
+                 imagem_original.shape[0],
+                 legenda,
+                 fontsize = 10,
+                 verticalalignment = 'bottom',
+                 horizontalalignment = 'right')
+
+        plt.tight_layout()
+        plt.show()
+
+
