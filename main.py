@@ -70,7 +70,7 @@ class FormDetector:
 
                 else:
                     formas['outros'] += 1
-            return formas
+        return formas
 
     def view_results(self, imagem_original, formas):
         """Visualizar os resultados"""
@@ -94,5 +94,25 @@ Outros: {formas['outros']}
 
         plt.tight_layout()
         plt.show()
+
+def main():
+    caminho_imagem = 'formas.jpg'
+    detector = FormDetector()
+
+    try:
+        imagem = detector.load_image(caminho_imagem)
+        imagem_cinza = detector.convert_to_grayscale(imagem)
+        imagem_blur = detector.apply_blur(imagem_cinza)
+        imagem_bordas = detector.edge_detection(imagem_blur)
+        contornos = detector.find_lines(imagem_bordas)
+        formas = detector.classify_forms(contornos, imagem)
+        detector.view_results(imagem, formas)
+    except Exception as e:
+        print(f'Erro no processamento da imagem: {e}')
+
+
+if __name__ == "__main__":
+    main()
+
 
 
